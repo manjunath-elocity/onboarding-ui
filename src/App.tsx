@@ -231,14 +231,14 @@ function App() {
       });
       setApiCalls(calls);
 
-      const promises = selectedEnvs.map((env, index) =>
-        axios.post(cpmsEnvironments[env as Environment] + "country", countryData, {
-          headers: {
-            Authorization: `Bearer ${envTokens[index]}`,
-          },
-        })
-      );
-      await Promise.all(promises);
+      // const promises = selectedEnvs.map((env, index) =>
+      //   axios.post(cpmsEnvironments[env as Environment] + "country", countryData, {
+      //     headers: {
+      //       Authorization: `Bearer ${envTokens[index]}`,
+      //     },
+      //   })
+      // );
+      // await Promise.all(promises);
     } catch (error) {
       console.error("Error fetching access token:", error);
       throw error;
