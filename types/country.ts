@@ -17,7 +17,7 @@ export const CountrySchema = z.object({
   code_alpha_2: z.string().length(2).toUpperCase(),
   code_alpha_3: z.string().length(3).toUpperCase(),
   countryCallingCode: z.string().regex(/^\+\d{1,5}$/),
-  currency: z.array(CurrencySchema).min(1),
+  currencies: z.array(CurrencySchema).min(1),
   timezones: z.array(z.string()).min(1),
   states: z.array(StateSchema).min(1).optional(),
 });

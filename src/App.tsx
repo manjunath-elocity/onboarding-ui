@@ -17,9 +17,9 @@ function App() {
     username: "service_account@elocity.com",
     password: "cpms@123",
   });
-  const [apiCalls, setApiCalls] = useState<
-    { url: string; method: string; data: any; headers: { Authorization: string } }[]
-  >([]);
+  // const [apiCalls, setApiCalls] = useState<
+  //   { url: string; method: string; data: any; headers: { Authorization: string } }[]
+  // >([]);
 
   const [existingTimezones, setExistingTimezones] = useState<string[]>([]);
   const [existingCurrencies, setExistingCurrencies] = useState<Currency[]>([]);
@@ -219,26 +219,27 @@ function App() {
         selectedEnvs.map((env) => getAccessToken(env as Environment))
       );
 
-      const calls = selectedEnvs.map((env, index) => {
-        return {
-          url: cpmsEnvironments[env as Environment] + "country",
-          method: "POST",
-          data: countryData,
-          headers: {
-            Authorization: `Bearer ${envTokens[index]}`,
-          },
-        };
-      });
-      setApiCalls(calls);
-
-      // const promises = selectedEnvs.map((env, index) =>
-      //   axios.post(cpmsEnvironments[env as Environment] + "country", countryData, {
+      // const calls = selectedEnvs.map((env, index) => {
+      //   return {
+      //     url: cpmsEnvironments[env as Environment] + "country",
+      //     method: "POST",
+      //     data: countryData,
       //     headers: {
       //       Authorization: `Bearer ${envTokens[index]}`,
       //     },
-      //   })
-      // );
-      // await Promise.all(promises);
+      //   };
+      // });
+      // setApiCalls(calls);
+
+      const promises = selectedEnvs.map((env, index) =>
+        axios.post(cpmsEnvironments[env as Environment] + "country", countryData, {
+          headers: {
+            Authorization: `Bearer ${envTokens[index]}`,
+          },
+        })
+      );
+      await Promise.all(promises);
+      alert("Country onboarded successfully!");
     } catch (error) {
       console.error("Error fetching access token:", error);
       throw error;
@@ -270,13 +271,13 @@ function App() {
         businessDetail: removeEmptyStrings(tenantData.businessDetail),
       };
 
-      const calls = selectedEnvs.map((env, idx) => ({
-        url: environments[env as Environment] + "tenant",
-        method: "POST",
-        data: cleanedTenantData,
-        headers: { Authorization: `Bearer ${envTokens[idx]}` },
-      }));
-      setApiCalls(calls);
+      // const calls = selectedEnvs.map((env, idx) => ({
+      //   url: environments[env as Environment] + "tenant",
+      //   method: "POST",
+      //   data: cleanedTenantData,
+      //   headers: { Authorization: `Bearer ${envTokens[idx]}` },
+      // }));
+      // setApiCalls(calls);
 
       const promises = selectedEnvs.map((env, idx) =>
         axios.post(environments[env as Environment] + "tenant/onboard", cleanedTenantData, {
@@ -390,16 +391,16 @@ function App() {
     setLoading(false);
   };
 
-  const ApiCallCard = ({ url, method, data, headers }: any) => (
-    <div className="border p-4 mb-4 rounded shadow">
-      <h4 className="font-bold">
-        {method} {url}
-      </h4>
-      <pre className="mt-2 text-sm bg-gray-100 p-2 rounded">{JSON.stringify(data, null, 2)}</pre>
-      <h5 className="mt-4 font-bold">Headers:</h5>
-      <pre className="mt-2 text-sm bg-gray-100 p-2 rounded">{JSON.stringify(headers, null, 2)}</pre>
-    </div>
-  );
+  // const ApiCallCard = ({ url, method, data, headers }: any) => (
+  //   <div className="border p-4 mb-4 rounded shadow">
+  //     <h4 className="font-bold">
+  //       {method} {url}
+  //     </h4>
+  //     <pre className="mt-2 text-sm bg-gray-100 p-2 rounded">{JSON.stringify(data, null, 2)}</pre>
+  //     <h5 className="mt-4 font-bold">Headers:</h5>
+  //     <pre className="mt-2 text-sm bg-gray-100 p-2 rounded">{JSON.stringify(headers, null, 2)}</pre>
+  //   </div>
+  // );
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -522,14 +523,14 @@ function App() {
         )}
       </div>
 
-      {apiCalls.length > 0 && (
+      {/* {apiCalls.length > 0 && (
         <div className="mt-6">
           <h2 className="text-2xl font-bold mb-4">API Calls</h2>
           {apiCalls.map((call, index) => (
             <ApiCallCard key={index} {...call} />
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 }

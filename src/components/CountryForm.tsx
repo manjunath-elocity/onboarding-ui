@@ -17,7 +17,7 @@ export default function CountryForm({
 }: CountryFormProps) {
   const [country, setCountry] = useState<Partial<Country>>({
     states: [],
-    currency: [],
+    currencies: [],
     timezones: [],
   });
   const [stateFile, setStateFile] = useState<File | null>(null);
@@ -37,7 +37,7 @@ export default function CountryForm({
       country.code_alpha_3 &&
       country.countryCallingCode &&
       country.timezones?.length &&
-      country.currency?.length &&
+      country.currencies?.length &&
       country.states?.length
     ) {
       onSubmit(country);
@@ -201,8 +201,8 @@ export default function CountryForm({
           <MultiCurrencySelect
             label="Currencies"
             options={existingCurrencies}
-            value={country.currency || []}
-            onChange={(currs) => setCountry((prev) => ({ ...prev, currency: currs }))}
+            value={country.currencies || []}
+            onChange={(currs) => setCountry((prev) => ({ ...prev, currencies: currs }))}
           />
         </div>
       </div>

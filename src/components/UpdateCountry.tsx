@@ -30,7 +30,7 @@ export default function UpdateCountry({
 }: CountryFormProps) {
   const [country, setCountry] = useState<Partial<Country>>({
     states: [],
-    currency: [],
+    currencies: [],
     timezones: [],
   });
   const [stateFile, setStateFile] = useState<File | null>(null);
@@ -46,7 +46,7 @@ export default function UpdateCountry({
         code_alpha_3: selectedCountry.code_alpha_3,
         name: selectedCountry.name,
         countryCallingCode: selectedCountry.countryCallingCode,
-        currency: selectedCountry.currency,
+        currencies: selectedCountry.currency,
         timezones: existingTimezones.filter((tz) => selectedCountry.timezones.includes(tz)),
       }));
     }
@@ -65,7 +65,7 @@ export default function UpdateCountry({
       country.code_alpha_3 &&
       country.countryCallingCode &&
       country.timezones?.length &&
-      country.currency?.length
+      country.currencies?.length
     ) {
       onSubmit(country);
     } else {
@@ -259,8 +259,8 @@ export default function UpdateCountry({
           <MultiCurrencySelect
             label="Add or Remove Currencies"
             options={existingCurrencies}
-            value={country.currency || []}
-            onChange={(currs) => setCountry((prev) => ({ ...prev, currency: currs }))}
+            value={country.currencies || []}
+            onChange={(currs) => setCountry((prev) => ({ ...prev, currencies: currs }))}
           />
         </div>
       </div>
