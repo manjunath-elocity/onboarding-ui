@@ -267,6 +267,7 @@ function App() {
       const cleanedTenantData = {
         ...tenantData,
         tenant: removeEmptyStrings(tenantData.tenant),
+        businessDetail: removeEmptyStrings(tenantData.businessDetail),
       };
 
       // const promises = selectedEnvs.map((env, idx) =>
@@ -283,6 +284,8 @@ function App() {
         headers: { Authorization: `Bearer ${envTokens[idx]}` },
       }));
       setApiCalls(calls);
+
+      alert("Tenant onboarded successfully!");
     } catch (error) {
       console.error("Error fetching access token:", error);
       throw error;
