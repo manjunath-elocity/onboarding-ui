@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Country, State, Currency } from "../../types/country";
+import { Country, Currency } from "../../types/country";
 import MultiSelectSearch from "./MultiSearch";
 import MultiCurrencySelect from "./CurrencySelect";
 import Papa from "papaparse";
@@ -69,87 +69,6 @@ export default function CountryForm({
         error: (err) => reject([err.message]),
       });
     });
-
-  // const handleProcess = async () => {
-  //   const procErrors: string[] = [];
-  //   // Basic file presence checks
-  //   if (!stateFile) procErrors.push("Please upload a State CSV file.");
-  //   if (!cityFile) procErrors.push("Please upload a City CSV file.");
-  //   if (procErrors.length) {
-  //     setErrors(procErrors);
-  //     return;
-  //   }
-
-  //   try {
-  //     const statesData = await parseCSV(stateFile!);
-  //     const citiesData = await parseCSV(cityFile!);
-
-  //     // Header validation
-  //     if (!statesData.length) procErrors.push("State CSV is empty.");
-  //     else if (!("code" in statesData[0] && "name" in statesData[0]))
-  //       procErrors.push("State CSV must have 'code' and 'name' headers.");
-
-  //     if (!citiesData.length) procErrors.push("City CSV is empty.");
-  //     else if (!("state_code" in citiesData[0] && "city_name" in citiesData[0]))
-  //       procErrors.push("City CSV must have 'state_code' and 'city_name' headers.");
-
-  //     // Stop if header or empty errors
-  //     if (procErrors.length) {
-  //       setErrors(procErrors);
-  //       return;
-  //     }
-
-  //     // Trim and build state map
-  //     const stateMap: Record<string, State & { cities: City[] }> = {};
-  //     const seenStateCodes = new Set<string>();
-  //     statesData.forEach((row, idx) => {
-  //       const code = String(row.code).trim();
-  //       const name = String(row.name).trim();
-  //       if (!code || !name)
-  //         procErrors.push(`Row ${idx + 2} in State CSV has empty 'code' or 'name'.`);
-  //       if (seenStateCodes.has(code))
-  //         procErrors.push(`Duplicate state code '${code}' found at row ${idx + 2}.`);
-  //       else {
-  //         seenStateCodes.add(code);
-  //         stateMap[code] = { code, name, cities: [] };
-  //       }
-  //     });
-
-  //     // Assign cities to states
-  //     citiesData.forEach((row, idx) => {
-  //       const stateCode = String(row.state_code).trim();
-  //       const cityName = String(row.city_name).trim();
-  //       if (!stateCode || !cityName) {
-  //         procErrors.push(`Row ${idx + 2} in City CSV has empty 'state_code' or 'city_name'.`);
-  //       } else if (!stateMap[stateCode]) {
-  //         procErrors.push(
-  //           `City '${cityName}' at row ${idx + 2} references unknown state code '${stateCode}'.`
-  //         );
-  //       } else {
-  //         stateMap[stateCode].cities.push({ name: cityName });
-  //       }
-  //     });
-
-  //     // Check duplicate city names within each state
-  //     Object.values(stateMap).forEach((state) => {
-  //       const cityNames = state.cities.map((c) => c.name);
-  //       const dupCities = cityNames.filter((c, i, arr) => arr.indexOf(c) !== i);
-  //       dupCities.forEach((dup) =>
-  //         procErrors.push(`Duplicate city '${dup}' found in state '${state.code}'.`)
-  //       );
-  //     });
-
-  //     if (procErrors.length) {
-  //       setErrors(procErrors);
-  //     } else {
-  //       // Populate country with parsed states
-  //       setCountry((prev) => ({ ...prev, states: Object.values(stateMap) }));
-  //       setErrors([]);
-  //     }
-  //   } catch (e: any) {
-  //     setErrors(Array.isArray(e) ? e : [String(e)]);
-  //   }
-  // };
 
   const handleProcess = async () => {
     const procErrors: string[] = [];

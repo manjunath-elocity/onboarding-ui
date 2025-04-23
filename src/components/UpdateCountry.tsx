@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Country, State, Currency } from "../../types/country";
+import { Country, Currency } from "../../types/country";
 import MultiSelectSearch from "./MultiSearch";
 import MultiCurrencySelect from "./CurrencySelect";
 import Papa from "papaparse";
