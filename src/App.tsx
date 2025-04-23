@@ -219,15 +219,6 @@ function App() {
         selectedEnvs.map((env) => getAccessToken(env as Environment))
       );
 
-      const promises = selectedEnvs.map((env, index) =>
-        axios.post(cpmsEnvironments[env as Environment] + "country", countryData, {
-          headers: {
-            Authorization: `Bearer ${envTokens[index]}`,
-          },
-        })
-      );
-      await Promise.all(promises);
-
       const calls = selectedEnvs.map((env, index) => {
         return {
           url: cpmsEnvironments[env as Environment] + "country",
@@ -239,6 +230,15 @@ function App() {
         };
       });
       setApiCalls(calls);
+
+      const promises = selectedEnvs.map((env, index) =>
+        axios.post(cpmsEnvironments[env as Environment] + "country", countryData, {
+          headers: {
+            Authorization: `Bearer ${envTokens[index]}`,
+          },
+        })
+      );
+      await Promise.all(promises);
     } catch (error) {
       console.error("Error fetching access token:", error);
       throw error;
@@ -270,13 +270,6 @@ function App() {
         businessDetail: removeEmptyStrings(tenantData.businessDetail),
       };
 
-      const promises = selectedEnvs.map((env, idx) =>
-        axios.post(environments[env as Environment] + "tenant/onboard", cleanedTenantData, {
-          headers: { Authorization: `Bearer ${envTokens[idx]}` },
-        })
-      );
-      await Promise.all(promises);
-
       const calls = selectedEnvs.map((env, idx) => ({
         url: environments[env as Environment] + "tenant",
         method: "POST",
@@ -284,6 +277,13 @@ function App() {
         headers: { Authorization: `Bearer ${envTokens[idx]}` },
       }));
       setApiCalls(calls);
+
+      const promises = selectedEnvs.map((env, idx) =>
+        axios.post(environments[env as Environment] + "tenant/onboard", cleanedTenantData, {
+          headers: { Authorization: `Bearer ${envTokens[idx]}` },
+        })
+      );
+      await Promise.all(promises);
 
       alert("Tenant onboarded successfully!");
     } catch (error) {
